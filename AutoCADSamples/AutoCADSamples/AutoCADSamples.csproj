@@ -95,6 +95,7 @@
     <Compile Include="CreateEntities\CreateLine.cs" />
     <Compile Include="CreateEntities\CreatePolyLine.cs" />
     <Compile Include="CreateEntities\CreateSpline.cs" />
+    <Compile Include="CreateEntities\CreateTable.cs" />
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Jig\BlockJig.cs" />
     <Compile Include="Jig\SelectObjectJig.cs" />
