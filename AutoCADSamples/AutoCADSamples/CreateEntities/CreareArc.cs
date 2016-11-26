@@ -13,7 +13,7 @@ namespace AutoCADSamples.CreateEntities
 {
     class CreareArc
     {
-        [CommandMethod("AutoCADSample", "CreateArc", CommandFlags.Modal)]
+        [CommandMethod("AutoCADSamples", "CreateArc", CommandFlags.Modal)]
         public void CreateArcCommand()
         {
             var document = Application.DocumentManager.MdiActiveDocument;

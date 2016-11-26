@@ -11,7 +11,7 @@ namespace AutoCADSamples.CreateEntities
 {
     class CreateTable
     {
-        [CommandMethod("AutoCADSample", "CreateTable", CommandFlags.Modal)]
+        [CommandMethod("AutoCADSamples", "CreateTable", CommandFlags.Modal)]
         public void CreateTableCommand()
         {
             try
