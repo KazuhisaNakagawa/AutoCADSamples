@@ -34,7 +34,7 @@ namespace AutoCADSamples.Dictionary
                         if (extentionId == ObjectId.Null)
                             continue;
 
-                        ChengeData(transaction, extentionId);
+                        ChengeExtensionDictionaryData(transaction, extentionId);
                     }
 
                     transaction.Commit();
@@ -52,7 +52,7 @@ namespace AutoCADSamples.Dictionary
         /// </summary>
         /// <param name="transaction"></param>
         /// <param name="extentionId"></param>
-        private static void ChengeData(Transaction transaction, ObjectId extentionId)
+        private static void ChengeExtensionDictionaryData(Transaction transaction, ObjectId extentionId)
         {
             var extentionDict = (DBDictionary)transaction.GetObject(extentionId, OpenMode.ForWrite);
             var xRecId = extentionDict.GetAt("TEST");
