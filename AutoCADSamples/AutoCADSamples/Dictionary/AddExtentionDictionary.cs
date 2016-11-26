@@ -29,16 +29,8 @@ namespace AutoCADSamples.Dictionary
                     foreach (ObjectId objectId in modelSpace)
                     {
                         var entity = (Entity)transaction.GetObject(objectId, OpenMode.ForRead);
-                        var extentionId = entity.ExtensionDictionary;
 
-                        if (extentionId == ObjectId.Null)
-                        {
-                            entity.UpgradeOpen();
-                            entity.CreateExtensionDictionary();
-                            extentionId = entity.ExtensionDictionary;
-                        }
-
-                        SetExtentionDictionaryData(transaction, extentionId, count);
+                        AddtExtentionDictionaryData(transaction, entity, count);
 
                         count += 1;
                     }
@@ -56,25 +48,34 @@ namespace AutoCADSamples.Dictionary
         /// 拡張ディクショナリのデータを設定
         /// </summary>
         /// <param name="transaction"></param>
-        /// <param name="extentionId"></param>
-        /// <param name="count"></param>
-        private static void SetExtentionDictionaryData(Transaction transaction, ObjectId extentionId, int count)
+        /// <param name="entity"></param>
+        /// <param name="count">拡張ディクショナリに設定する値</param>
+        private static void AddtExtentionDictionaryData(Transaction transaction, DBObject entity, int count)
         {
-            var extentionDict = (DBDictionary) transaction.GetObject(extentionId, OpenMode.ForRead);
+            var extentionId = entity.ExtensionDictionary;
 
-            if (!extentionDict.Contains("TEST"))
+            if (extentionId == ObjectId.Null)
             {
-                extentionDict.UpgradeOpen();
-                var xRec = new Xrecord();
-                var resultBuffer = new ResultBuffer();
-                resultBuffer.Add(new TypedValue((int) DxfCode.ExtendedDataAsciiString, "Data"));
-                resultBuffer.Add(new TypedValue((int) DxfCode.ExtendedDataInteger32, count));
-
-                xRec.Data = resultBuffer;
-
-                extentionDict.SetAt("TEST", xRec);
-                transaction.AddNewlyCreatedDBObject(xRec, true);
+                entity.UpgradeOpen();
+                entity.CreateExtensionDictionary();
+                extentionId = entity.ExtensionDictionary;
             }
+
+            var extentionDict = (DBDictionary)transaction.GetObject(extentionId, OpenMode.ForRead);
+
+            if (extentionDict.Contains("TEST"))
+                return;
+
+            extentionDict.UpgradeOpen();
+            var xRec = new Xrecord();
+            var resultBuffer = new ResultBuffer();
+            resultBuffer.Add(new TypedValue((int)DxfCode.ExtendedDataAsciiString, "Data"));
+            resultBuffer.Add(new TypedValue((int)DxfCode.ExtendedDataInteger32, count));
+
+            xRec.Data = resultBuffer;
+
+            extentionDict.SetAt("TEST", xRec);
+            transaction.AddNewlyCreatedDBObject(xRec, true);
         }
     }
 }

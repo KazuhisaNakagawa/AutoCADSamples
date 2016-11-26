@@ -29,12 +29,8 @@ namespace AutoCADSamples.Dictionary
                     foreach (ObjectId objectId in modelSpace)
                     {
                         var entity = (Entity)transaction.GetObject(objectId, OpenMode.ForRead);
-                        var extentionId = entity.ExtensionDictionary;
 
-                        if (extentionId == ObjectId.Null)
-                            continue;
-
-                        ChengeExtensionDictionaryData(transaction, extentionId);
+                        ChengeExtensionDictionaryData(transaction, entity);
                     }
 
                     transaction.Commit();
@@ -51,9 +47,14 @@ namespace AutoCADSamples.Dictionary
         /// 拡張ディクショナリの 1071 の値に 1 足す
         /// </summary>
         /// <param name="transaction"></param>
-        /// <param name="extentionId"></param>
-        private static void ChengeExtensionDictionaryData(Transaction transaction, ObjectId extentionId)
+        /// <param name="entity"></param>
+        private static void ChengeExtensionDictionaryData(Transaction transaction, DBObject entity)
         {
+            var extentionId = entity.ExtensionDictionary;
+
+            if (extentionId == ObjectId.Null)
+                return;
+
             var extentionDict = (DBDictionary)transaction.GetObject(extentionId, OpenMode.ForWrite);
             var xRecId = extentionDict.GetAt("TEST");
             var xRec = (Xrecord)transaction.GetObject(xRecId, OpenMode.ForRead);
