@@ -101,6 +101,7 @@
     <Compile Include="HelloWorld.cs" />
     <Compile Include="Jig\BlockJig.cs" />
     <Compile Include="Jig\SelectObjectJig.cs" />
+    <Compile Include="ModifyEntities\AddAttributeToBlockReference.cs" />
     <Compile Include="myCommands.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
